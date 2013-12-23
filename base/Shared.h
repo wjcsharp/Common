@@ -60,7 +60,7 @@ struct ERROR_CODE
 	union
 	{
 		ULONG UErrCode;
-		struct  
+		struct CODE
 		{
 			ULONG_PTR Present : 1;
 			ULONG_PTR WriteAccess : 1;

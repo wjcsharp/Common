@@ -11,10 +11,12 @@
 class CDisableKernelApc
 {
 public:
+	_IRQL_requires_max_(APC_LEVEL)
 	CDisableKernelApc()
 	{
 		KeEnterGuardedRegion();
 	}
+	_IRQL_requires_max_(APC_LEVEL)
 	~CDisableKernelApc()
 	{
 		KeLeaveGuardedRegion();
@@ -24,13 +26,28 @@ public:
 class CDisableSpecialApc
 {
 public:
+	_IRQL_requires_max_(APC_LEVEL)
 	CDisableSpecialApc()
 	{
 		KeEnterCriticalRegion();
 	}
+	_IRQL_requires_max_(APC_LEVEL)
 	~CDisableSpecialApc()
 	{
 		KeLeaveCriticalRegion();
+	}
+};
+
+class CDisableApc :
+	private CDisableSpecialApc,
+	private CDisableKernelApc
+{
+public:
+	_IRQL_requires_max_(APC_LEVEL)
+	CDisableApc() :
+		CDisableKernelApc(),
+		CDisableSpecialApc()
+	{
 	}
 };
 

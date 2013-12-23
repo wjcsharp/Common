@@ -160,6 +160,7 @@ protected:
 		__in void* secondStruct
 		)
 	{
+		UNREFERENCED_PARAMETER(table);
 		if (*reinterpret_cast<TYPE*>(firstStruct) > *reinterpret_cast<TYPE*>(secondStruct))
 			return GenericGreaterThan;
 
@@ -177,6 +178,7 @@ protected:
 		__in CLONG byteSize
 		)
 	{
+		UNREFERENCED_PARAMETER(table);
 		return malloc(byteSize);
 	}
 
@@ -187,6 +189,7 @@ protected:
 		__in void* buffer
 		)
 	{
+		UNREFERENCED_PARAMETER(table);
 		free(buffer);
 	}
 

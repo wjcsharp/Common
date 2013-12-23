@@ -66,6 +66,12 @@ public:
 	void* ForceWritePtrUser(
 		__in_opt MEMORY_CACHING_TYPE cacheType = MmCached
 		);
+	
+	_IRQL_requires_max_(APC_LEVEL)
+	__checkReturn
+	const void* ReadPtrToUser(
+		__in_opt MEMORY_CACHING_TYPE cacheType = MmCached
+		);
 
 protected:
 	_IRQL_requires_max_(APC_LEVEL)

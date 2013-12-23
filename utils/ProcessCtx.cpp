@@ -14,6 +14,9 @@ void CProcessContext<THRD, PROC, IMG>::ProcessNotifyRoutineEx(
 	__inout_opt PS_CREATE_NOTIFY_INFO* createInfo 
 	)
 {
+	UNREFERENCED_PARAMETER(eprocess);
+	UNREFERENCED_PARAMETER(processId);
+	UNREFERENCED_PARAMETER(createInfo);
 }
 
 template<class THRD, class PROC, class IMG>
@@ -123,6 +126,9 @@ NTSTATUS CProcessContext<THRD, PROC, IMG>::RegisterCallback(
 	__in_opt void* Argument2 
 	)
 {
+	UNREFERENCED_PARAMETER(CallbackContext);
+	UNREFERENCED_PARAMETER(Argument1);
+	UNREFERENCED_PARAMETER(Argument2);
 	return STATUS_SUCCESS;
 }
 

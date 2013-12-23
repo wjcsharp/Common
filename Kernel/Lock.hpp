@@ -97,7 +97,6 @@ public:
 	{
 		KeReleaseGuardedMutex(m_tLock);
 	}
-
 };
 
 //after compiler optimalization looks much more prettier ;)

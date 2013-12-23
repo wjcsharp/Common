@@ -169,6 +169,8 @@ void __cdecl doexit(
 	__in int /*retcaller*/
 	)
 {
+	UNREFERENCED_PARAMETER(quick);
+
 	for (ATEXIT_ENTRY* entry = gTopAtexitEntry; entry; entry = entry->Next)
 	{
 		ATEXIT_ENTRY* next = entry->Next;

@@ -12,6 +12,8 @@
 
 #define _DEBUG_MODE
 
+#define DECLARE_GLOBAL_CONST_UNICODE_STRING(_var, _str) extern const __declspec(selectany) UNICODE_STRING _var = RTL_CONSTANT_STRING(_str)
+
 #define MEMBER(cast, ptr, member) reinterpret_cast<cast*>(reinterpret_cast<ULONG_PTR>(ptr) + static_cast<size_t>(member))
 
 //----------------------------------------------------
@@ -93,5 +95,9 @@ __inline void KeBreak()
 #define SECONDS(seconds) \
 	(((signed __int64)(seconds)) * MILLISECONDS(1000L))
 
+
+#define MAKEFOURCC(ch0, ch1, ch2, ch3) \
+	((DWORD)(BYTE)(ch0) | ((DWORD)(BYTE)(ch1) << 8) | \
+	((DWORD)(BYTE)(ch2) << 16) | ((DWORD)(BYTE)(ch3) << 24 ))
 
 #endif // _COMMON_H

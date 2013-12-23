@@ -47,6 +47,8 @@ bool CMdl::Lock(
 	__in bool user
 	)
 {
+	if (!m_mdl)
+		return false;
 	//should to be spinlocked ?!
 	if (0 == (m_mdl->MdlFlags & MDL_PAGES_LOCKED))
 	{
@@ -183,6 +185,18 @@ void* CMdl::ForceWritePtrUser(
 			mem = WritePtrUnsafe();
 	}
 	return mem;		
+}
+
+_IRQL_requires_max_(APC_LEVEL)
+__checkReturn
+const void* CMdl::ReadPtrToUser( 
+	__in_opt MEMORY_CACHING_TYPE cacheType /*= MmCached */
+	)
+{
+	UNREFERENCED_PARAMETER(cacheType);
+	if (Lock(false))
+		return ReadPtrUser();
+	return NULL;
 }
 
 //************* physical to virtual *************

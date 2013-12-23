@@ -36,6 +36,13 @@ public:
 		return (m_oldIRQL != BAD_IRQL);
 	}
 
+	static
+	__checkReturn
+	bool RunsOnPassiveLvl()
+	{
+		return (PASSIVE_LEVEL == KeGetCurrentIrql());
+	}
+
 protected:
 	KIRQL m_oldIRQL;
 };
