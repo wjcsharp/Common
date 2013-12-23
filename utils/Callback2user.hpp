@@ -55,6 +55,7 @@ public:
 	}
 
 protected:
+	_IRQL_requires_max_(PASSIVE_LEVEL)
 	bool InvokeCall(
 		__inout void** output,
 		__inout size_t* osize
@@ -118,6 +119,7 @@ public:
 		}
 	}
 
+	_IRQL_requires_max_(PASSIVE_LEVEL)
 	__checkReturn
 	TYPE CallOneParamApi(
 		__inout_bcount(size) void** output,
@@ -125,7 +127,7 @@ public:
 		)
 	{
 		if (InvokeCall(output, size))
-			return (sizeof(bool) == *size && *output && *static_cast<const TYPE*>(*output));
+			return (sizeof(TYPE) == *size && *output && *static_cast<const TYPE*>(*output));
 
 		return false;
 	}
@@ -152,6 +154,7 @@ public:
 	}
 
 private:
+//CODE WITH CPL3, executed in ring3!!
 	static 
 	void UserCallback(
 		__in void* ntdllZwCallbackReturn,
@@ -163,7 +166,7 @@ private:
 	{
 		void* input = &inputFindHelper + TOP_OF_STACK_4__fnDWORD + DEEP_OF_INPUT_STACK;
 
-		TYPE res = ((*(bool (*)(PARAM))(targetFunction))(param));
+		TYPE res = ((*(TYPE (*)(PARAM))(targetFunction))(param));
 
 		(*(void (*)(void*, ULONG, NTSTATUS))(ntdllZwCallbackReturn))(
 			&res,
@@ -223,6 +226,7 @@ eq %p ntdll!LdrpVerifyAlternateResourceModule+0xd5; eq %p ntdll!RtlpWalkLowFragH
 		m_input[ROP_RBP] = m_input[ROP_ntCallbackReturn];//rbp needs to be readable!!
 	}
 
+	_IRQL_requires_max_(PASSIVE_LEVEL)
 	__checkReturn
 	TYPE CallOneParamApi(
 		__inout_bcount(size) void** output,
